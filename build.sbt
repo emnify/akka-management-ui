@@ -60,7 +60,7 @@ lazy val shared = crossProject(JSPlatform, JVMPlatform)
   .in(file("shared"))
   .settings(commonSettings)
   .settings(
-    name := "akka-management-ui"
+    name := "akka-management-ui-shared"
   )
   .jvmSettings(commonJVMSettings)
   .jsSettings(commonJSSettings)
@@ -104,7 +104,7 @@ lazy val backend = project.in(file("backend"))
   .settings(commonSettings)
   .settings(commonJVMSettings)
   .settings(
-    name := "akka-management-ui-shared",
+    name := "akka-management-ui",
     libraryDependencies ++= Seq(
       "com.lightbend.akka.management" %% "akka-management-cluster-http" % "1.0.1",
       "org.webjars" % "webjars-locator-core" % "0.38",
