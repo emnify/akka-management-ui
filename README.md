@@ -7,7 +7,7 @@ Adding akka-cluster-management-ui as dependency will automatically register its 
 
 ### sbt
 ```
-resolvers += "jcenter" at "http://jcenter.bintray.com"
+resolvers += "bintray-mkroli" at "https://dl.bintray.com/mkroli/maven"
 
 libraryDependencies += "com.emnify.akka.management.ui" %% "akka-management-ui" % VERSION
 ```
@@ -16,8 +16,8 @@ libraryDependencies += "com.emnify.akka.management.ui" %% "akka-management-ui" %
 ```xml
 <repositories>
   <repository>
-    <id>jcenter</id>
-    <url>http://jcenter.bintray.com</url>
+    <id>bintray-mkroli</id>
+    <url>https://dl.bintray.com/mkroli/maven</url>
   </repository>
 </repositories>
 
