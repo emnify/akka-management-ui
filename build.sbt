@@ -46,7 +46,12 @@ lazy val commonJVMSettings = Seq(
   scalacOptions ++= Seq("-feature", "-unchecked", "-deprecation") ++ (CrossVersion.partialVersion(scalaVersion.value) match {
     case Some((2, 10 | 11)) => Seq("-target:jvm-1.6")
     case _ => Seq("-target:jvm-1.8")
-  })
+  }),
+  libraryDependencies ++= Seq(
+    "org.scalatest" %% "scalatest" % "3.0.8" % "test",
+    "com.typesafe.akka" %% "akka-stream-testkit" % "2.5.23" % "test",
+    "com.typesafe.akka" %% "akka-http-testkit" % "10.1.9" % "test"
+  )
 )
 
 lazy val commonJSSettings = Seq(
@@ -82,6 +87,7 @@ lazy val frontend = project.in(file("frontend"))
     scalaJSLinkerConfig in(Compile, fullOptJS) ~= {
       _.withSourceMap(false)
     },
+    jsEnv in Test := PhantomJSEnv().value,
     libraryDependencies ++= Seq(
       "com.lihaoyi" %%% "scalarx" % "0.4.0",
       "com.lihaoyi" %%% "scalatags" % "0.7.0",
@@ -106,7 +112,7 @@ lazy val backend = project.in(file("backend"))
   .settings(
     name := "akka-management-ui",
     libraryDependencies ++= Seq(
-      "com.lightbend.akka.management" %% "akka-management-cluster-http" % "1.0.1",
+      "com.lightbend.akka.management" %% "akka-management-cluster-http" % "1.0.3",
       "org.webjars" % "webjars-locator-core" % "0.38",
       "com.lihaoyi" %% "scalatags" % (CrossVersion.partialVersion(scalaVersion.value) match {
         case Some((2, 11)) => "0.6.8"
