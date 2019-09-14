@@ -67,8 +67,27 @@ trait ClusterMemberTableComponent {
   }
 
   lazy val renderMembersTable = Rx {
+    def optionalBadge(c: Boolean)(s: String) = {
+      if (c) {
+        Some(span(s, `class` := "badge badge-primary ml-1"))
+      } else {
+        None
+      }
+    }
+
     val rows = members().members.toList.sortBy(_.node).map { member =>
-      tr(td(member.node), td(member.status), td(member.roles.mkString(", ")), membersButton(member.node), `class` := member.classes)
+      val selfBadge = optionalBadge(members().selfNode == member.node)("Self")
+      val leaderBadge = optionalBadge(members().leader == Some(member.node))("Leader")
+      val oldestBadge = optionalBadge(members().oldest == Some(member.node))("Oldest")
+      val badges = List(selfBadge, oldestBadge, leaderBadge).flatten
+      val roles = member.roles.toList.sorted.mkString(", ")
+      tr(
+        td(span(member.node), badges),
+        td(member.status),
+        td(roles),
+        membersButton(member.node),
+        `class` := member.classes
+      )
     }
 
     table(
@@ -80,7 +99,15 @@ trait ClusterMemberTableComponent {
 
   lazy val renderUnreachableTable = Rx {
     val rows = members().unreachable.toList.sortBy(_.node).map { unreachable =>
-      tr(td(unreachable.node), td(unreachable.observedBy.mkString(", ")), membersButton(unreachable.node), `class` := "table-danger")
+      tr(
+        td(unreachable.node),
+        td(
+          span(s"${unreachable.observedBy.size} / ${members().members.size}", `class` := "badge badge-primary mr-1"),
+          span(unreachable.observedBy.toList.sorted.mkString(", "))
+        ),
+        membersButton(unreachable.node),
+        `class` := "table-danger"
+      )
     }
 
     table(
