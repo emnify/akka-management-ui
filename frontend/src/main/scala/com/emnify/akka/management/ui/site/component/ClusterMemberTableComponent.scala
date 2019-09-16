@@ -31,14 +31,14 @@ trait ClusterMemberTableComponent {
     }
   }
 
-  private def confirm(f: => Unit): Unit = confirm("Are you sure?")(f)
+  private def confirm(action: String, node: String)(f: => Unit): Unit = confirm(s"""Please confirm triggering "$action" on $node.""")(f)
 
   private def membersButton(member: String) = {
     val leaveButtonBase = button(
       "Leave",
       `class` := "btn btn-sm btn-warning",
       `type` := "button",
-      onclick := (() => confirm {
+      onclick := (() => confirm("leave", member) {
         memberLeave(member)
       })
     )
@@ -46,7 +46,7 @@ trait ClusterMemberTableComponent {
       "Down",
       `class` := "btn btn-sm btn-danger",
       `type` := "button",
-      onclick := (() => confirm {
+      onclick := (() => confirm("down", member) {
         memberDown(member)
       })
     )
