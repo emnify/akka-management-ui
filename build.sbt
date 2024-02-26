@@ -113,7 +113,7 @@ lazy val backend = project.in(file("backend"))
     name := "akka-management-ui",
     libraryDependencies ++= Seq(
       "com.lightbend.akka.management" %% "akka-management-cluster-http" % "1.0.3",
-      "org.webjars" % "webjars-locator-core" % "0.38",
+      "org.webjars" % "webjars-locator-core" % "0.55",
       "com.lihaoyi" %% "scalatags" % (CrossVersion.partialVersion(scalaVersion.value) match {
         case Some((2, 11)) => "0.6.8"
         case _ => "0.7.0"
