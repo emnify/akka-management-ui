@@ -5,6 +5,17 @@
 ## Usage
 Adding akka-cluster-management-ui as dependency will automatically register its routes with [Akka Cluster HTTP Management](https://doc.akka.io/docs/akka-management/current/cluster-http-management.html). You can reach it like Akka Cluster HTTP Management by default at http://HOST:8558/ui.
 
+// TODO: needs to be moved to maven central
+
+To currently build it locally:
+
+### manual package
+```
+sbt clean "+ publishM2"
+```
+
+files can be found in local maven cache "~/.m2/..."
+
 ### sbt
 ```
 resolvers += "bintray-mkroli" at "https://dl.bintray.com/mkroli/maven"
